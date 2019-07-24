@@ -1,0 +1,35 @@
+
+
+.results {
+  padding: 48px 0;
+  color: #fff;
+  display: none;
+
+  .output-result {
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+.image-search {
+  background: #fff;
+  color: #333;
+  border: 1px solid rgb(180, 180, 180);
+  box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
+  padding: 24px;
+  width: 250px;
+  border-radius: 3px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  .legend {
+    line-height: 1.8rem;
+  }
+
+  img {
+    height: 250px;
+    border: 1px solid black;
+    margin-bottom: 12px;
+  }
+}

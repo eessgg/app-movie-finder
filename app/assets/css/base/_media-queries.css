@@ -1,0 +1,99 @@
+@media only screen and (min-width: 280px) and (max-width: 690px){
+
+  .container {
+    width: 90%;
+  }
+
+  .header .container {
+    flex-direction: column;
+    text-align: center;
+    .logo {
+      font-size: 2.2rem;
+    }
+    .serch-area {
+      margin: 48px 0;
+
+      input {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .results {
+    margin-left: 0;
+    .output-result {
+      flex-direction: column;
+
+      .column {
+        margin-left: 0;
+      }
+
+      .image-search {
+        width: 90%;
+        background: #fff;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 18px;
+        margin: 12px auto;
+
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+
+        .legend {
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  .hero {
+    height: 350px;
+
+    .hero-body {
+      background-size: contain;
+    }
+  }
+
+  .gallery-intro {
+    text-align: center;
+    margin: 0 auto;
+
+    .container {
+      flex-direction: column;
+
+      .column {
+        width: 100%;
+        margin: 24px auto;
+        text-align: center;
+
+        &:last-child {
+          display: block;
+          position: relative;
+          background: transparent;
+          font-size: 1.2rem;
+          width: 350px;
+        }
+        .image {
+          background: transparent;
+          width: 100%;
+          margin-bottom: 18px;
+          margin: 0 auto;
+          position: relative;
+        }
+      }
+    }
+  }
+}
+
+
+/*  screen 900px; */
+@media screen and (min-width: 691px) and (max-width: 900px){
+
+}
+
+/*  screen 1200px; */
+@media screen and (min-width: 901px) and (max-width: 1200px){
+
+}

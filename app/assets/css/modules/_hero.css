@@ -1,0 +1,18 @@
+.hero {
+  background-image: url(../images/back.jpg);
+  background-size: cover;
+  height: 500px;
+
+  &-body {
+    color: #fff;
+    position: relative;
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    height: 100%;
+
+    a {
+      color: #fff;
+    }
+  }
+}

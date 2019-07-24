@@ -1,0 +1,30 @@
+.header  {
+  background-color: #fdfdfd;
+  padding: 48px;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .serch-area {
+
+    input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid gray;
+      height: 50px;
+      width: 300px;
+      padding: 4px;
+      outline: none;
+      right: 0;
+      position: relative;
+      transition: all .5s ease-in-out;
+      font-size: 22px;
+
+      &:focus {
+        width: 450px;
+      }
+    }
+  }
+}
