@@ -7,7 +7,17 @@
 
   .output-result {
     display: flex;
-    justify-content: flex-start;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    .column {
+      margin: 0;
+    }
+
+    &::after {
+      content: "";
+      flex: auto;
+    }
   }
 }
 .image-search {
@@ -16,7 +26,8 @@
   border: 1px solid rgb(180, 180, 180);
   box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.15);
   padding: 24px;
-  width: 250px;
+  max-width: 230px;
+  margin: 5px;
   border-radius: 3px;
   text-align: center;
   display: flex;
