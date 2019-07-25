@@ -109,11 +109,11 @@ gulp.task('js:dist', function () {
     .pipe(gulp.dest(paths.distJS));
 });
 gulp.task('image:dist', function () {
-  return gulp.src(paths.appIMG)
+  return gulp.src(paths.tmpIMG)
     .pipe(imagemin())
     .pipe(gulp.dest(paths.distIMG));
 });
-gulp.task('copy:dist', ['html:dist', 'css:dist', 'js:dist']);
+gulp.task('copy:dist', ['html:dist', 'css:dist', 'js:dist', 'image:dist']);
 
 gulp.task('inject:dist', ['copy:dist'], function () {
   var css = gulp.src(paths.distCSSInj);
