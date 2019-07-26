@@ -15,7 +15,7 @@ function loadEvents() {
     const thumbs = document.querySelectorAll('figure.image');
     if (thumbs) {
         thumbs.forEach(function (thumb) {
-            thumb.addEventListener('click', openModal)
+            thumb.addEventListener('click', handleThumbClick)
         })
     }
 
@@ -140,6 +140,22 @@ function showTopRated(ratedResult) {
     loadEvents()
     contentModal(ratedResult);
 }
+
+// AQUI
+
+
+function handleThumbClick() {
+    console.log('handleThumbClick')
+}
+
+
+
+
+
+
+
+
+
 
 // getPopularMovies
 // function getPopularMovies() {
