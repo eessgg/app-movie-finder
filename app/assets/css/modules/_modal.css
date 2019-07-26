@@ -19,7 +19,9 @@
     /* width: 20px; height:20px; */
     font-size: 28px;
     color: rgb(150, 150, 150);
+    cursor: pointer;
     transition: all 0.2s ease-in;
+    padding:4px;
 
     &:hover {
       color: #333;
@@ -42,9 +44,13 @@
     padding: 36px;
 
     .image-modal {
-      width: 530px;
+      width: 230px;
       height:auto;
       margin-right: 18px;
+
+      img {
+        width: 230px;
+      }
     }
 
     .info-modal {
