@@ -4,10 +4,8 @@ const thumbs = document.querySelectorAll('figure.image');
 const mysearch = document.querySelector('.mysearch');
 const resultsBox = document.querySelector('.results');
 const outputResult = document.querySelector('.output-result');
+const popularOutput = document.querySelector('.popular .container');
 
-
-// const topOutput = document.querySelector('#rated .container');
-// const popularOutput = document.querySelector('#popular .container');
 
 const errosText = {
     empty: 'Digite um nome de filme...'
@@ -15,7 +13,7 @@ const errosText = {
 
 function loadEvents() {
     const thumbs = document.querySelectorAll('figure.image');
-    if(thumbs) {
+    if (thumbs) {
         thumbs.forEach(function (thumb) {
             thumb.addEventListener('click', openModal)
         })
@@ -68,7 +66,7 @@ function getDataSearch(urlData) {
         })
         .catch((error) => { console.log(error) });
 
-        outputResult.innerHTML = '';
+    outputResult.innerHTML = '';
 }
 
 function showSearch(dt) {
@@ -116,14 +114,19 @@ function getTopRated() {
             })
         })
 }
-
 function showTopRated(ratedResult) {
     const topOutput = document.querySelector('#rated .container');
 
     let topOutputBox = '';
     topOutputBox += `
          <div class="column">
-             <figure class="image">
+            <figure
+                class="image"
+                data-img="${ratedResult.img}"
+                data-title="${ratedResult.title}"
+                data-text="${ratedResult.text}"
+                data-vid="${ratedResult.vid}"
+            >
                  <img src=${'https://image.tmdb.org/t/p/w500/' + ratedResult.img} alt="${ratedResult.title}">
                  <div class="legend">
                      <h2 class="title is-5"> ${ratedResult.title}(${ratedResult.year})</h2>
@@ -138,14 +141,50 @@ function showTopRated(ratedResult) {
     contentModal(ratedResult);
 }
 
+// getPopularMovies
+// function getPopularMovies() {
+//     const apiRateInfo = { api_key_r: '5b1ed0f512dc0bcf732837664658fb66' };
+//     let popularRatedResults;
 
+//     var urlPopular = `https://api.themoviedb.org/3/movie/popular?api_key=${apiRateInfo.api_key_r}&language=en-US&page=1`;
+//     fetch(urlPopular)
+//         .then(response => response.json())
+//         .then(data => {
+//             popularRatedResults = data.results.slice(0, 5);
+//             console.log(popularRatedResults)
+//             popularRatedResults.map(popResult => {
+//                 // showPopular(popResult)
+//                 console.log(popResult);
+//             })
+//         })
+// }
+
+// function showPopular(results) {
+//     popularOutputBox = '';
+//     popularOutputBox += `
+//         <div class="column">
+//             <figure class="image">
+//                 <img src=${'https://image.tmdb.org/t/p/w500/' + results.poster_path} alt="${results.title}">
+//                 <div class="legend">
+//                     <h2 class="title is-5"> ${results.title}(${results.release_date})</h2>
+//                     <p class="cat"> Drama/ Adventure</p>
+//                 </div>
+//             </figure>
+//         </div>
+//     `;
+//     popularOutput.innerHTML += popularOutputBox;
+// }
+
+
+
+// MODAL
 function contentModal(results) {
     const modalContent = document.querySelector('.modal-content');
 
     let resultModal = '';
-      resultModal += `
+    resultModal += `
           <div class="column image-modal">
-            <img src=${'https://image.tmdb.org/t/p/w500/'+results.img} alt="${results.title}">
+            <img src=${'https://image.tmdb.org/t/p/w500/' + results.img} alt="${results.title}">
           </div>
           <div class="column info-modal">
             <header>
@@ -153,7 +192,7 @@ function contentModal(results) {
             </header>
             <p class="cat"> Drama / Adventure</p>
             <p class="info"> ${results.text} </p>
-            ${ results.vid ?  '<button class="btn">Watch TRailer <span> > </span></button>' : ''}}
+            ${ results.vid ? '<button class="btn">Watch TRailer <span> > </span></button>' : ''}}
             <footer>
               <div class="star">
                 <i class="fas fa-star"></i>
@@ -163,11 +202,9 @@ function contentModal(results) {
           </div>
           <span class="close-modal">&times;</span>
       `;
-      console.log(resultModal)
-      modalContent.innerHTML = resultModal;
+    modalContent.innerHTML = resultModal;
 }
 
-// MODAL
 function openModal() {
     modal.style.display = 'block';
 }
@@ -183,10 +220,6 @@ function outsideClick(e) {
 }
 
 
-window.addEventListener('DOMContentLoaded', function () {
-    loadEvents()
-    // getTopRated();
-    // getPopularMovies();
-})
-
+window.addEventListener('DOMContentLoaded', loadEvents);
 window.addEventListener('DOMContentLoaded', getTopRated);
+window.addEventListener('DOMContentLoaded', getPopularMovies);
