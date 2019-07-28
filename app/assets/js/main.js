@@ -142,10 +142,40 @@ function showTopRated(ratedResult) {
 }
 
 // AQUI
+function handleThumbClick(e) {
+    const dataSet = e.currentTarget.dataset;
+    contentModal(dataSet)
+    openModal()
+}
 
+// MODAL
+function contentModal(results) {
+    const modalContent = document.querySelector('.modal-content');
 
-function handleThumbClick() {
-    console.log('handleThumbClick')
+    console.log(results)
+
+    let resultModal = '';
+    resultModal += `
+          <div class="column image-modal">
+            <img src=${'https://image.tmdb.org/t/p/w500/' + results.img} alt="${results.title}">
+          </div>
+          <div class="column info-modal">
+            <header>
+              <h2> ${results.title} (${results.year})</h2>
+            </header>
+            <p class="cat"> Drama / Adventure</p>
+            <p class="info"> ${results.text} </p>
+            ${ results.vid ? '<button class="btn">Watch TRailer <span> > </span></button>' : ''}}
+            <footer>
+              <div class="star">
+                <i class="fas fa-star"></i>
+                &star;
+              </div>
+            </footer>
+          </div>
+          <span class="close-modal">&times;</span>
+      `;
+    modalContent.innerHTML = resultModal;
 }
 
 
@@ -193,33 +223,6 @@ function handleThumbClick() {
 
 
 
-// MODAL
-function contentModal(results) {
-    const modalContent = document.querySelector('.modal-content');
-
-    let resultModal = '';
-    resultModal += `
-          <div class="column image-modal">
-            <img src=${'https://image.tmdb.org/t/p/w500/' + results.img} alt="${results.title}">
-          </div>
-          <div class="column info-modal">
-            <header>
-              <h2> ${results.title} (${results.year})</h2>
-            </header>
-            <p class="cat"> Drama / Adventure</p>
-            <p class="info"> ${results.text} </p>
-            ${ results.vid ? '<button class="btn">Watch TRailer <span> > </span></button>' : ''}}
-            <footer>
-              <div class="star">
-                <i class="fas fa-star"></i>
-                &star;
-              </div>
-            </footer>
-          </div>
-          <span class="close-modal">&times;</span>
-      `;
-    modalContent.innerHTML = resultModal;
-}
 
 function openModal() {
     modal.style.display = 'block';
@@ -238,4 +241,4 @@ function outsideClick(e) {
 
 window.addEventListener('DOMContentLoaded', loadEvents);
 window.addEventListener('DOMContentLoaded', getTopRated);
-window.addEventListener('DOMContentLoaded', getPopularMovies);
+// window.addEventListener('DOMContentLoaded', getPopularMovies);
