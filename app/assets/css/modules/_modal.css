@@ -73,6 +73,27 @@
       .info {
         margin: 12px 0;
       }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+
+        .vote_average {
+          position: absolute;
+          padding: 8px 12px;
+          margin: 12px;
+          border-radius: 6px;
+          background: goldenrod;
+          color: black;
+          right: 0;
+          bottom: 0;
+          font-size: 18px;
+          font-weight: 600;
+        }
+      }
     }
 
   }

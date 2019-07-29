@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
 
-/* 2a1573 / 2f13a5 */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 html,
 body {
@@ -11,15 +15,11 @@ body {
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 0.9rem;
-  background: #0e0238;
-  /* background-color: linear-gradient(to top, #1b0b57ad, #2a1573, #0e0238); */
+  background: #040014;
+  /* background-color: linear-gradient(to top, #0a0030, #040014); */
   color: #333;
   height: 100%;
 }
-
-/* img {
-  width: 100%;
-} */
 
 a {
   color: #333;
@@ -49,8 +49,7 @@ h2 {
 #wrapper {
   display: flex;
   align-items: center;
-  justify-conten 
-   t: center;
+  justify-content: center;
   height: 100%;
 }
 
@@ -104,4 +103,15 @@ h2 {
 .cat {
   text-transform: uppercase;
   padding: 4px 0;
+}
+
+.fave {
+  background:#170269;
+  border-radius: 3px;
+  color: goldenrod;
+  font-size: 58px;
+  padding: 8px 12px;
+  margin: 12px;
+  left: 0;
+  cursor: pointer;
 }

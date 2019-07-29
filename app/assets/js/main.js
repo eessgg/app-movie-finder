@@ -4,15 +4,16 @@ const thumbs = document.querySelectorAll('figure.image');
 const mysearch = document.querySelector('.mysearch');
 const resultsBox = document.querySelector('.results');
 const outputResult = document.querySelector('.output-result');
-const popularOutput = document.querySelector('.popular .container');
 
 
 const errosText = {
     empty: 'Digite um nome de filme...'
 }
 
-function loadEvents() {
+function loadEvents(dataset) {
     const thumbs = document.querySelectorAll('figure.image');
+    const faveBtns = document.querySelectorAll('.fave');
+
     if (thumbs) {
         thumbs.forEach(function (thumb) {
             thumb.addEventListener('click', handleThumbClick)
@@ -22,6 +23,16 @@ function loadEvents() {
     window.addEventListener('click', outsideClick);
     closeBtn.addEventListener('click', closeModal);
     mysearch.addEventListener('change', validate);
+    if(faveMovies) {
+        faveBtns.forEach(function(favBtn) {
+            favBtn.addEventListener('click', function(e) {
+                faveMovies(dataset)
+            })
+        })
+    }
+
+    // Document
+    document.addEventListener("DOMContentLoaded", localStorageOnLoad)
 }
 
 //validar campos search
@@ -72,8 +83,8 @@ function getDataSearch(urlData) {
 function showSearch(dt) {
 
     resultsBox.style.display = 'block';
-    // debugger;
-    console.log(dt)
+
+    console.log(dt.video)
     output = '';
     output += `
       <div class="column result-box">
@@ -82,7 +93,6 @@ function showSearch(dt) {
           <div class="legend">
             <h2 class="title is-5"> ${dt.original_title}(${dt.release_date.slice(0, 4)}) </h2>
             <p class="cat"> Drama/ Adventure</p>
-            ${!dt.video ? '' : '<button class="btn"> <a href="' + dt.video + '">Watch TRailer</a> <span> > </span></button>'}
           </div>
         </figure>
       </div>
@@ -108,7 +118,8 @@ function getTopRated() {
                     title: results.title,
                     year: results.release_date.slice(0, 4),
                     text: results.overview,
-                    vid: results.video
+                    vid: results.video,
+                    vote: results.vote_average
                 }
                 showTopRated(ratedResultsObj)
             })
@@ -126,11 +137,14 @@ function showTopRated(ratedResult) {
                 data-title="${ratedResult.title}"
                 data-text="${ratedResult.text}"
                 data-vid="${ratedResult.vid}"
+                data-year="${ratedResult.year}"
+                data-vote="${ratedResult.vote}"
             >
                  <img src=${'https://image.tmdb.org/t/p/w500/' + ratedResult.img} alt="${ratedResult.title}">
                  <div class="legend">
                      <h2 class="title is-5"> ${ratedResult.title}(${ratedResult.year})</h2>
                      <p class="cat"> Drama/ Adventure</p>
+                     <p class="cat"> ${ratedResult.vote} </p>
                  </div>
              </figure>
          </div>
@@ -138,91 +152,132 @@ function showTopRated(ratedResult) {
     topOutput.innerHTML += topOutputBox;
 
     loadEvents()
-    contentModal(ratedResult);
+    // contentModal(ratedResult);
+}
+// getPopularMovies
+function getPopularMovies() {
+    const apiRateInfo = { api_key_r: '5b1ed0f512dc0bcf732837664658fb66' };
+    let popularRatedResults;
+    let popResultsObj;
+
+    var urlPopular = `https://api.themoviedb.org/3/movie/popular?api_key=${apiRateInfo.api_key_r}&language=en-US&page=1`;
+    fetch(urlPopular)
+        .then(response => response.json())
+        .then(data => {
+            popularRatedResults = data.results.slice(0, 5);
+
+
+            popularRatedResults.map(popResult => {
+
+                popResultsObj = {
+                    img: popResult.poster_path,
+                    title: popResult.title,
+                    year: popResult.release_date.slice(0, 4),
+                    text: popResult.overview,
+                    vid: popResult.video,
+                    vote: popResult.vote_average,
+                }
+                showPopular(popResultsObj)
+            })
+        })
 }
 
-// AQUI
+function showPopular(results) {
+    const popularOutput = document.querySelector('#popular .container');
+
+    popularOutputBox = '';
+    popularOutputBox += `
+        <div class="column">
+            <figure
+                class="image"
+                data-img="${results.img}"
+                data-title="${results.title}"
+                data-text="${results.text}"
+                data-year="${results.year}"
+                data-vid="${results.vid}"
+                data-vote="${results.vote}"
+            >
+                <img src=${'https://image.tmdb.org/t/p/w500/' + results.img} alt="${results.title}">
+                <div class="legend">
+                    <h2 class="title is-5"> ${results.title}(${results.year})</h2>
+                    <p class="cat"> Drama/ Adventure</p>
+                </div>
+
+            </figure>
+        </div>
+    `;
+    popularOutput.innerHTML += popularOutputBox;
+    loadEvents()
+}
+
 function handleThumbClick(e) {
     const dataSet = e.currentTarget.dataset;
     contentModal(dataSet)
     openModal()
+    loadEvents(dataSet)
 }
 
-// MODAL
 function contentModal(results) {
     const modalContent = document.querySelector('.modal-content');
 
-    console.log(results)
-
     let resultModal = '';
     resultModal += `
-          <div class="column image-modal">
-            <img src=${'https://image.tmdb.org/t/p/w500/' + results.img} alt="${results.title}">
-          </div>
-          <div class="column info-modal">
-            <header>
-              <h2> ${results.title} (${results.year})</h2>
-            </header>
-            <p class="cat"> Drama / Adventure</p>
-            <p class="info"> ${results.text} </p>
-            ${ results.vid ? '<button class="btn">Watch TRailer <span> > </span></button>' : ''}}
-            <footer>
-              <div class="star">
-                <i class="fas fa-star"></i>
-                &star;
-              </div>
-            </footer>
-          </div>
-          <span class="close-modal">&times;</span>
-      `;
+                  <div class="column image-modal">
+                    <img src=${'https://image.tmdb.org/t/p/w500/' + results.img} alt="${results.title}">
+                  </div>
+                  <div class="column info-modal">
+                    <header>
+                      <h2> ${results.title} (${results.year})</h2>
+                    </header>
+                    <p class="cat"> Drama / Adventure</p>
+                    <p class="info"> ${results.text} </p>
+                    <footer>
+                      <div class="fave"> <img src="./assets/images/hearts.png" alt="fave" /> </div>
+                      <div class="vote_average">${results.vote}</div>
+                    </footer>
+                  </div>
+              `;
     modalContent.innerHTML = resultModal;
 }
 
+function faveMovies(dataset) {
+    dataset.myFave = true;
+    addFaveMovieToLocalStorage(dataset)
+}
 
+// localStorage
+function addFaveMovieToLocalStorage(dt) {
+    let myFaves = getFavesFromStorage();
 
+    // add into array
+    myFaves.push(dt);
 
+    // convert into string
+    localStorage.setItem('myFaves', JSON.stringify( myFaves ));
+}
 
+function getFavesFromStorage() {
+    let myfaves;
+    const favesLS = localStorage.getItem('myFaves');
+    if(favesLS === null) {
+        myfaves = [];
+    } else {
+        myfaves = JSON.parse(favesLS)
+    }
 
+    return myfaves;
+}
 
+// print values on load
+function localStorageOnLoad(){
+    let faves = getFavesFromStorage();
 
-
-
-// getPopularMovies
-// function getPopularMovies() {
-//     const apiRateInfo = { api_key_r: '5b1ed0f512dc0bcf732837664658fb66' };
-//     let popularRatedResults;
-
-//     var urlPopular = `https://api.themoviedb.org/3/movie/popular?api_key=${apiRateInfo.api_key_r}&language=en-US&page=1`;
-//     fetch(urlPopular)
-//         .then(response => response.json())
-//         .then(data => {
-//             popularRatedResults = data.results.slice(0, 5);
-//             console.log(popularRatedResults)
-//             popularRatedResults.map(popResult => {
-//                 // showPopular(popResult)
-//                 console.log(popResult);
-//             })
-//         })
-// }
-
-// function showPopular(results) {
-//     popularOutputBox = '';
-//     popularOutputBox += `
-//         <div class="column">
-//             <figure class="image">
-//                 <img src=${'https://image.tmdb.org/t/p/w500/' + results.poster_path} alt="${results.title}">
-//                 <div class="legend">
-//                     <h2 class="title is-5"> ${results.title}(${results.release_date})</h2>
-//                     <p class="cat"> Drama/ Adventure</p>
-//                 </div>
-//             </figure>
-//         </div>
-//     `;
-//     popularOutput.innerHTML += popularOutputBox;
-// }
-
-
-
+    console.log(faves);
+    // iterate storage
+    faves.forEach(function(fave) {
+        console.log(fave)
+    })
+}
 
 function openModal() {
     modal.style.display = 'block';
@@ -241,4 +296,4 @@ function outsideClick(e) {
 
 window.addEventListener('DOMContentLoaded', loadEvents);
 window.addEventListener('DOMContentLoaded', getTopRated);
-// window.addEventListener('DOMContentLoaded', getPopularMovies);
+window.addEventListener('DOMContentLoaded', getPopularMovies);
