@@ -4,6 +4,9 @@ const thumbs = document.querySelectorAll('figure.image');
 const mysearch = document.querySelector('.mysearch');
 const resultsBox = document.querySelector('.results');
 const outputResult = document.querySelector('.output-result');
+const faveBtn = document.querySelector('.fave-btn')
+const faveOutput = document.querySelector('#fave-output')
+
 
 
 const errosText = {
@@ -30,6 +33,7 @@ function loadEvents(dataset) {
             })
         })
     }
+    faveBtn.addEventListener('click', openFaveOutput)
 
     // Document
     document.addEventListener("DOMContentLoaded", localStorageOnLoad)
@@ -245,13 +249,16 @@ function faveMovies(dataset) {
     addFaveMovieToLocalStorage(dataset)
 }
 
+function openFaveOutput() {
+    console.log('faveOutput')
+    faveOutput.classList.toggle('visible');
+}
+
 // localStorage
 function addFaveMovieToLocalStorage(dt) {
     let myFaves = getFavesFromStorage();
-
     // add into array
     myFaves.push(dt);
-
     // convert into string
     localStorage.setItem('myFaves', JSON.stringify( myFaves ));
 }
@@ -264,18 +271,33 @@ function getFavesFromStorage() {
     } else {
         myfaves = JSON.parse(favesLS)
     }
-
     return myfaves;
 }
+
+function showFave() {
+    let faves = getFavesFromStorage();
+    let list = document.querySelector('.list');
+    let mylist = '';
+
+    faves.map((item) => {
+        console.log(item.title)
+        mylist += `
+            <li> ${item.title} </li>
+        `
+    })
+    list.style.display = 'block';
+    list.innerHTML = mylist;
+}
+
+
 
 // print values on load
 function localStorageOnLoad(){
     let faves = getFavesFromStorage();
 
-    console.log(faves);
     // iterate storage
     faves.forEach(function(fave) {
-        console.log(fave)
+        showFave(faves);
     })
 }
 
@@ -297,3 +319,4 @@ function outsideClick(e) {
 window.addEventListener('DOMContentLoaded', loadEvents);
 window.addEventListener('DOMContentLoaded', getTopRated);
 window.addEventListener('DOMContentLoaded', getPopularMovies);
+window.addEventListener('DOMContentLoaded', showFave);

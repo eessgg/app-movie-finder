@@ -7,7 +7,25 @@
     justify-content: space-between;
   }
 
+  .logo {
+    min-width: 20%;
+  }
+  .fave-btn {
+    background: #170269;
+    width: auto;
+    height: 75%;
+    padding: 12px;
+    cursor: pointer;
+    right:0;
+    border: 6px;
+    display: block;
+  }
+
   .serch-area {
+    width: calc(70% - 40px);
+    position: relative;
+    right: 40px;
+    display: block;
 
     input {
       background: transparent;
@@ -15,10 +33,10 @@
       border-bottom: 1px solid gray;
       height: 50px;
       width: 300px;
-      padding: 4px;
+      padding: 4px ;
       outline: none;
       right: 0;
-      position: relative;
+      position: absolute;
       transition: all .5s ease-in-out;
       font-size: 22px;
 

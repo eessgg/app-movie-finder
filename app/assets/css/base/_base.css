@@ -106,7 +106,7 @@ h2 {
 }
 
 .fave {
-  background:#170269;
+  background: #170269;
   border-radius: 3px;
   color: goldenrod;
   font-size: 58px;
@@ -114,4 +114,34 @@ h2 {
   margin: 12px;
   left: 0;
   cursor: pointer;
+}
+
+
+
+#fave-output {
+  display: none;
+}
+
+#fave-output.visible {
+  display: block;
+}
+
+#fave-output {
+  background: goldenrod;
+  padding: 12px;
+  position: relative;
+
+  .container {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  h3 {
+    text-transform: uppercase;
+  }
+
+  .list {
+    display: none;
+    padding-left: 48px;
+  }
 }
